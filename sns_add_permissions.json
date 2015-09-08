@@ -20,14 +20,14 @@
     }
   },
   "Resources" : {
-        "CfnTestSNSTopic": {
+        "TestSNSTopic": {
           "Type": "AWS::SNS::Topic",
           "Properties": {
             "Subscription": [ {
                 "Endpoint":  { "Fn::GetAtt" : [ "ProcessSNSMessages", "Arn" ] },
                 "Protocol": "lambda"
               } ],
-            "TopicName": "CfnTestSNSTopic"
+            "TopicName": "TestSNSTopic"
           }
         },
       "ProcessSNSMessages": {
@@ -94,7 +94,8 @@
         "Region": { "Ref": "AWS::Region" },
         "FunctionName": { "Ref" : "ProcessSNSMessages" },
         "Principal": "sns.amazonaws.com",
-        "Action": "*"
+        "SourceArn": { "Ref": "TestSNSTopic" },
+        "Action": "lambda:InvokeFunction"
       }
     }
   }

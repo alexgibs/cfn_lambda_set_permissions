@@ -15,12 +15,14 @@ exports.handler = function(event, context) {
     ,   function_name = event.ResourceProperties.FunctionName
     ,   principal = event.ResourceProperties.Principal
     ,   action = event.ResourceProperties.Action
+    ,   source_arn = event.ResourceProperties.SourceArn
     ,   lambda = new aws.Lambda({region: event.ResourceProperties.Region});
     
     var params = {
       Action: action,
       FunctionName: function_name,
       Principal: principal,
+      SourceArn: source_arn,
       StatementId: function_name
     };
     lambda.addPermission(params, function(err, data) {
